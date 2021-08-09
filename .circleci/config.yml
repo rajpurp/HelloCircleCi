@@ -16,9 +16,6 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - run: echo $MY_ENV_VAR2 
-environment:
-  MY_ENV_VAR_1: Prakash0
-  MY_ENV_VAR_2: Rajpurohit0
 workflows:
   # Name the workflow "welcome"
   welcome:
