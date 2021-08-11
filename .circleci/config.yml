@@ -1,24 +1,17 @@
 version: 2.1
 
-jobs: # conditional steps may also be defined in `commands:`
-  job_with_optional_custom_checkout:
-    parameters:
-      custom_checkout:
-        type: string
-        default: ""
-    machine: true
+jobs:
+  my_job:
+    docker:
+      - image: circleci/node:13.8.0
     steps:
-      - when:
-          condition: <<parameters.custom_checkout>>
-          steps:
-            - run: echo "my custom checkout"
-      - unless:
-          condition: <<parameters.custom_checkout>>
-          steps:
-            - checkout
+      - run: return 1
+      - run:
+          name: on error
+          command: echo "Hello Error!"
+          when: on_fail
+
 workflows:
-  build-test-deploy:
+  my_workflow:
     jobs:
-      - job_with_optional_custom_checkout:
-          custom_checkout: "any non-empty string is truthy"
-      - job_with_optional_custom_checkout
+      - my_job
